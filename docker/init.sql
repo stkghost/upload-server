@@ -1,0 +1,1 @@
+CREATE DATABASE upload_server_db_test
