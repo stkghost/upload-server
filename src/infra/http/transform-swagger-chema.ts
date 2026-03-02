@@ -16,11 +16,6 @@ type TransformSwaggerSchemaData = Parameters<typeof jsonSchemaTransform>[0];
 export function transformSiwaggerSchema(data: TransformSwaggerSchemaData) {
   const { schema, url } = jsonSchemaTransform(data);
 
-  const schemaBody = {
-    type: "object",
-    required: [],
-    properties: {},
-  };
   if (schema.consumes?.includes("multipart/form-data")) {
     if (schema.body === undefined) {
       schema.body = {

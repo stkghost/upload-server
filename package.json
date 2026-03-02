@@ -2,7 +2,6 @@
   "name": "upload-server",
   "version": "1.0.0",
   "description": "",
-  "type": "module",
   "main": "index.js",
   "scripts": {
     "dev": "tsx watch --env-file .env src/infra/http/server.ts",
@@ -13,7 +12,9 @@
     "db:studio": "drizzle-kit studio",
     "db:migrate:test": "dotenv -e .env.test -- drizzle-kit migrate",
     "pretest": "pnpm run db:migrate:test",
-    "pretest:watch": "pnpm run db:migrate:test"
+    "pretest:watch": "pnpm run db:migrate:test",
+    "build": "tsup",
+    "start": "node dist/infra/http/server.mjs"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +24,7 @@
     "@faker-js/faker": "^10.2.0",
     "@types/node": "^25.0.9",
     "drizzle-kit": "^0.31.8",
+    "tsup": "^8.5.1",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vite-tsconfig-paths": "^6.0.4",
