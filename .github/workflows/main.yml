@@ -30,7 +30,7 @@ jobs:
         id: generate-tag
         run: |
           SHA=$(echo $GITHUB_SHA | head -c7)
-          echo "sha=$SHA >> $GITHUB_OUTPUT"
+          echo "sha=$SHA" >> $GITHUB_OUTPUT
 
       - name: Build and push the image to AWS ECR
         id: build-push-image
