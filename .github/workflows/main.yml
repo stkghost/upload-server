@@ -67,7 +67,7 @@ jobs:
           format: "table"
           ignore-unfixed: true
           vuln-type: "os,library"
-          seveiry: "CRITICAL,HIGH,MEDIUM,LOW"
+          severity: "CRITICAL,HIGH,MEDIUM,LOW"
 
       - name: Build and push the image to AWS ECR
         # id: build-push-image
