@@ -51,7 +51,7 @@ jobs:
           echo "sha=$SHA" >> $GITHUB_OUTPUT
 
       - name: Build and push the image to AWS ECR
-        id: build-push-image
+        # id: build-push-image
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -70,7 +70,7 @@ jobs:
           severity: "CRITICAL,HIGH"
 
       - name: Build and push the image to AWS ECR
-        # id: build-push-image
+        id: build-push-image
         uses: docker/build-push-action@v6
         with:
           context: .
