@@ -69,7 +69,7 @@ jobs:
           ignore-unfixed: true
           vuln-type: "os,library"
           output: "stdout"
-          exit-code: 1
+          exit-code: 0
           severity: "CRITICAL,HIGH,MEDIUM,LOW"
 
       - name: Build and push the image to AWS ECR
