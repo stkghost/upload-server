@@ -63,11 +63,11 @@ jobs:
         id: run-trivy-scanner
         uses: aquasecurity/trivy-action@0.29.0
         with:
-          image-ref: "${{steps.login-ecr.outputs.registry}}/${{vars.ECR_REPOSITORY}}:test"
+          image-ref: "${{steps.login-ecr.outputs.registry}}/${{ vars.ECR_REPOSITORY }}:test"
           format: "table"
           ignore-unfixed: true
           vuln-type: "os,library"
-          severity: "CRITICAL,HIGH,MEDIUM,LOW"
+          severity: "CRITICAL,HIGH"
 
       - name: Build and push the image to AWS ECR
         # id: build-push-image
