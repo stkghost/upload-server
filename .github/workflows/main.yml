@@ -67,7 +67,6 @@ jobs:
           format: "table"
           ignore-unfixed: true
           vuln-type: "os,library"
-          scan-type: fs
           severity: "CRITICAL,HIGH"
 
       - name: Build and push the image to AWS ECR
