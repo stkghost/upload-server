@@ -60,18 +60,6 @@ jobs:
           tags: |
             ${{steps.login-ecr.outputs.registry}}/${{ vars.ECR_REPOSITORY }}:test
 
-      # - name: Run Trivy scanner
-      #   id: run-trivy-scanner
-      #   uses: aquasecurity/trivy-action@0.29.0
-      #   with:
-      #     image-ref: "${{steps.login-ecr.outputs.registry}}/${{ vars.ECR_REPOSITORY }}:test"
-      #     format: "table"
-      #     ignore-unfixed: true
-      #     vuln-type: "os,library"
-      #     output: "stdout"
-      #     exit-code: 0
-      #     severity: "CRITICAL,HIGH,MEDIUM,LOW"
-
       - name: Build and push the image to AWS ECR
         id: build-and-push-the-image-to-aws-ecr
         uses: docker/build-push-action@v6
@@ -82,6 +70,16 @@ jobs:
           tags: |
             ${{steps.login-ecr.outputs.registry}}/${{ vars.ECR_REPOSITORY }}:${{ steps.generate-tag.outputs.sha }}
 
+      - name: App runner deploy
+        id: apprunner-deploy
+        uses: awslabs/amazon-app-runner-deploy@main
+        with:
+          service: widget-server
+          image: ${{steps.login-ecr.outputs.registry}}/${{vars.ECR_REPOSITORY}}:${{steps.generate-tag.outputs.sha}}
+          region: ${{vars.AWS_REGION}}
+          cpu: 0.5
+          memory: 1
+          port: 3333
       # - name: Build and push the image to AWS ECR
       #   id: build-push-image
       #   uses: docker/build-push-action@v6
@@ -95,3 +93,15 @@ jobs:
       # run: |
       #   docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
       #   docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+      # - name: Run Trivy scanner
+      #   id: run-trivy-scanner
+      #   uses: aquasecurity/trivy-action@0.29.0
+      #   with:
+      #     image-ref: "${{steps.login-ecr.outputs.registry}}/${{ vars.ECR_REPOSITORY }}:test"
+      #     format: "table"
+      #     ignore-unfixed: true
+      #     vuln-type: "os,library"
+      #     output: "stdout"
+      #     exit-code: 0
+      #     severity: "CRITICAL,HIGH,MEDIUM,LOW"
