@@ -1,11 +1,54 @@
 services:
-  pg:
-    image: bitnami/postgresql:latest
+  app:
+    build: .
+    container_name: widget-server
+    restart: unless-stopped
+    depends_on:
+      - db
     ports:
-      - "5431:5432"
+      - 3000:3333
     environment:
-      - POSTGRES_PASSWORD=docker
-      - POSTGRES_USER=docker
-      - POSTGRES_DB=upload_server_db
+      - CLOUDFLARE_ACCESS_KEY_ID=$CLOUDFLARE_ACCESS_KEY_ID
+      - CLOUDFLARE_SECRET_KEY_ID=$CLOUDFLARE_SECRET_KEY_ID
+      - CLOUDFLARE_BUCKET=$CLOUDFLARE_BUCKET
+      - CLOUDFLARE_ACCOUNT_ID=$CLOUDFLARE_ACCOUNT_ID
+      - CLOUDFLARE_BUCKET_URL=$CLOUDFLARE_BUCKET_URL
+      - DATABASE_URL=$DATABASE_URL
+    networks:
+      - widget
+
+  db:
+    image: postgres:latest
+    container_name: widget_server_database
+    restart: unless-stopped
+    ports:
+      - 5443:5432
+    environment:
+      - POSTGRES_USER=$POSTGRES_USER
+      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+      - POSTGRES_DB=$POSTGRES_DB
     volumes:
-      - "./docker:/docker-entrypoint-initdb.d"
+      - db:/var/lib/postgresql/data
+    networks:
+      - db
+      - widget
+
+volumes:
+  db:
+networks:
+  widget:
+    driver: bridge
+  db:
+    driver: bridge
+
+# services:
+#   pg:
+#     image: bitnami/postgresql:latest
+#     ports:
+#       - "5431:5432"
+#     environment:
+#       - POSTGRES_PASSWORD=docker
+#       - POSTGRES_USER=docker
+#       - POSTGRES_DB=upload_server_db
+#     volumes:
+#       - "./docker:/docker-entrypoint-initdb.d"
