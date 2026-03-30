@@ -84,8 +84,8 @@ jobs:
       #   id: build-push-image
       #   uses: docker/build-push-action@v6
       #   with:
-      #     context: .
       #     load: true
+      #     context: .
       #   env:
       #     ECR_REGISTRY: ${{steps.login-ecr.outputs.registry}}
       #     ECR_REPOSITORY: ${{vars.ECR_REPOSITORY}}
