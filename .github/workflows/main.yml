@@ -78,6 +78,15 @@ jobs:
           container-name: widget-server
           image: ${{steps.login-ecr.outputs.registry}}/${{vars.ECR_REPOSITORY}}:${{steps.generate-tag.outputs.sha}}
 
+      - name: Deploy Amazon ECS
+        id: deploy-amazon-ecs
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+        with:
+          task-definition: ${{steps.render-task-definition.outputs.task-definition}}
+          service: widget-server
+          cluster: rocketseat-ecs
+          wait-for-service-stability: true
+
           # - name: App runner deploy
       #   id: apprunner-deploy
       #   uses: awslabs/amazon-app-runner-deploy@main
