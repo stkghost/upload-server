@@ -84,7 +84,7 @@ jobs:
         with:
           task-definition: ${{steps.render-task-definition.outputs.task-definition}}
           service: widget-server
-          cluster: rocketseat-ecs
+          cluster: wiget-server-ecs
           wait-for-service-stability: true
 
           # - name: App runner deploy
